@@ -1,14 +1,37 @@
 import SwiftUI
 
+struct FacilityCard: View {
+    let title: String
+    let imageName: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            VStack {
+                Image(systemName: imageName)
+                    .font(.system(size: 40))
+                    .foregroundColor(.primaryGreen)
+                    .frame(width: 120, height: 80)
+                    .background(Color.backgroundGray)
+                    .cornerRadius(8)
+
+                Text(title)
+                    .font(.caption)
+                    .foregroundColor(.black)
+            }
+        }
+    }
+}
+
 struct HomePageView: View {
     @State private var showLectureHallInfo = false
     @State private var showLabInfo = false
     @State private var showLectureHallPage = false
     @State private var showLabsPage = false
-    
+
     let lectureHalls = ["Hall 10", "Hall 12", "Hall 2", "Hall 5", "Hall 8"]
     let labs = ["Lab 1", "Lab 2", "Lab 3", "Lab 4", "Lab 5"]
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -21,13 +44,13 @@ struct HomePageView: View {
                         Spacer()
                     }
                     .padding(.horizontal)
-                    
+
                     // Map Section
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Map")
                             .font(.headline)
                             .padding(.horizontal)
-                        
+
                         Image(systemName: "map.fill")
                             .font(.system(size: 100))
                             .foregroundColor(.primaryGreen)
@@ -36,7 +59,7 @@ struct HomePageView: View {
                             .cornerRadius(12)
                             .padding(.horizontal)
                     }
-                    
+
                     // Lecture Halls Section
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -49,7 +72,7 @@ struct HomePageView: View {
                             .foregroundColor(.primaryGreen)
                         }
                         .padding(.horizontal)
-                        
+
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
                                 ForEach(lectureHalls, id: \.self) { hall in
@@ -65,7 +88,7 @@ struct HomePageView: View {
                             .padding(.horizontal)
                         }
                     }
-                    
+
                     // Labs Section
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -78,7 +101,7 @@ struct HomePageView: View {
                             .foregroundColor(.primaryGreen)
                         }
                         .padding(.horizontal)
-                        
+
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 15) {
                                 ForEach(labs, id: \.self) { lab in
@@ -94,7 +117,24 @@ struct HomePageView: View {
                             .padding(.horizontal)
                         }
                     }
+
+                    // Hidden NavigationLink to push LabsView
+                    NavigationLink(
+                        destination: LabsView(),
+                        isActive: $showLabsPage
+                    ) {
+                        EmptyView()
+                    }
+
+                    Spacer(minLength: 100)
                     
+                    NavigationLink(
+                        destination: LectureHallsView(),
+                        isActive: $showLectureHallPage
+                    ) {
+                        EmptyView()
+                    }
+
                     Spacer(minLength: 100)
                 }
                 .padding(.top)
@@ -105,36 +145,8 @@ struct HomePageView: View {
             LectureHallInfoView()
         }
         .sheet(isPresented: $showLabInfo) {
-            LabInfoView()
-        }
-        .sheet(isPresented: $showLectureHallPage) {
-            LectureHallPageView()
-        }
-        .sheet(isPresented: $showLabsPage) {
-            LabsPageView()
-        }
-    }
-}
-
-struct FacilityCard: View {
-    let title: String
-    let imageName: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            VStack {
-                Image(systemName: imageName)
-                    .font(.system(size: 40))
-                    .foregroundColor(.primaryGreen)
-                    .frame(width: 120, height: 80)
-                    .background(Color.backgroundGray)
-                    .cornerRadius(8)
-                
-                Text(title)
-                    .font(.caption)
-                    .foregroundColor(.black)
-            }
+            // Replace with actual Lab Info View
+            Text("Lab Info View")
         }
     }
 }
