@@ -132,3 +132,4 @@ struct HallRowView: View {
 #Preview {
     LectureHallsView()
 }
+    

@@ -1,29 +1,27 @@
-
 import SwiftUI
 
-struct LibraryDetailView: View {
-    let library: Library
+struct DiningDetailView: View {
+    let dining: Dining
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Image(library.imageName)
+                Image(dining.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 250)
                     .clipped()
                 
+                // Content Section
                 VStack(alignment: .leading, spacing: 20) {
-                    // lab Name and Navigate Button
                     HStack {
-                        Text(library.name)
+                        Text(dining.name)
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         
                         Spacer()
                         
                         Button(action: {
-                            // Navigate action
                         }) {
                             HStack {
                                 Image(systemName: "location.north.fill")
@@ -42,6 +40,7 @@ struct LibraryDetailView: View {
                     .padding(.horizontal)
                     .padding(.top, 20)
                     
+                    // Location
                     HStack {
                         Text("Location")
                             .font(.subheadline)
@@ -50,13 +49,12 @@ struct LibraryDetailView: View {
                     }
                     .padding(.horizontal)
                     
-                    Text(library.location)
+                    Text(dining.location)
                         .font(.body)
                         .fontWeight(.medium)
                         .padding(.horizontal)
                         .padding(.top, -10)
                     
-                    // Hours
                     HStack {
                         Text("Hours")
                             .font(.subheadline)
@@ -65,17 +63,19 @@ struct LibraryDetailView: View {
                     }
                     .padding(.horizontal)
                     
-                    Text(library.hours)
+                    Text(dining.hours)
                         .font(.body)
                         .fontWeight(.medium)
                         .padding(.horizontal)
                         .padding(.top, -10)
                     
+                    // Divider
                     Rectangle()
                         .fill(Color.gray.opacity(0.2))
                         .frame(height: 1)
                         .padding(.horizontal)
                     
+                    // Crowd
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Crowd")
                             .font(.title2)
@@ -99,7 +99,54 @@ struct LibraryDetailView: View {
                         .background(Color.lightGreen)
                         .cornerRadius(10)
                         .padding(.horizontal)
-
+                    }
+                    
+                    // Menu Section
+                    VStack(alignment: .leading, spacing: 15) {
+                        HStack {
+                            Text("Menu")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                // View All action
+                            }) {
+                                Text("View All")
+                                    .font(.subheadline)
+                                    .foregroundColor(.primaryGreen)
+                            }
+                        }
+                        .padding(.horizontal)
+                        
+                        // Menu Items
+                        VStack(spacing: 0) {
+                            MenuItemRow(
+                                imageName: "chicken-pastry",
+                                title: "Chicken Pastry",
+                                price: "Rs. 150.00"
+                            )
+                            
+                            Divider()
+                                .padding(.leading, 70)
+                            
+                            MenuItemRow(
+                                imageName: "egg-roll",
+                                title: "Egg Roll",
+                                price: "Rs. 150.00"
+                            )
+                            
+                            Divider()
+                                .padding(.leading, 70)
+                            
+                            MenuItemRow(
+                                imageName: "chocolate-shake",
+                                title: "Chocolate Milk Shake",
+                                price: "Rs. 450.00"
+                            )
+                        }
+                        .padding(.horizontal)
                     }
                     
                     // Amenities
@@ -114,8 +161,8 @@ struct LibraryDetailView: View {
                             GridItem(.flexible())
                         ], spacing: 10) {
                             AmenityCard(icon: "wifi", title: "Wi-Fi")
-                            AmenityCard(icon: "chair.fill", title: "100 Seats")
-                            AmenityCard(icon: "rectangle.on.rectangle", title: "Smart Board")
+                            AmenityCard(icon: "chair.fill", title: "150 Seats")
+                            AmenityCard(icon: "figure.wave", title: "Restroom")
                             AmenityCard(icon: "door.left.hand.open", title: "2 Entrance")
                         }
                         .padding(.horizontal)
@@ -129,9 +176,77 @@ struct LibraryDetailView: View {
                 }
             }
         }
-        .navigationTitle(library.name)
+        .navigationTitle(dining.name)
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
     }
 }
 
+// Menu Item Row Component
+struct MenuItemRow: View {
+    let imageName: String
+    let title: String
+    let price: String
+    
+    var body: some View {
+        HStack(spacing: 15) {
+            Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 50, height: 50)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.gray.opacity(0.1))
+                )
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+            }
+            
+            Spacer()
+            
+            HStack(spacing: 5) {
+                Text(price)
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .foregroundColor(.gray)
+                
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+        }
+        .padding(.vertical, 12)
+        .contentShape(Rectangle())
+    }
+}
+
+// Updated Dining Model (if you need to add menu items)
+struct MenuItem: Identifiable {
+    let id: Int
+    let name: String
+    let price: String
+    let imageName: String
+}
+
+// You might want to update your Dining struct to include menu items
+/*
+struct Dining: Identifiable {
+    let id: Int
+    let name: String
+    let location: String
+    let hours: String
+    let imageName: String
+    let menuItems: [MenuItem]
+}
+*/
+
+#Preview {
+    DiningDetailView(dining: Dining(id: 1, name: "The Grill", location: "Ground Floor, Harrison Building", hours: "Open. 07:00 AM to 04:00 PM", imageName: "The-Grill"))
+}

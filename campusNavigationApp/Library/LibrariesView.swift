@@ -1,27 +1,30 @@
 import SwiftUI
 
-struct DiningView: View {
+struct LibrariesView: View {
     @State private var searchText = ""
     
-    let dinings = [
-        Dining(id: 1, name: "The Grill", location: "2nd Floor Harrison Building", hours:"Open | Closes 04 PM", imageName: "The-Grill"),
-        Dining(id: 2, name: "The Bistro", location: "2nd Floor Harrison Building", hours:"Closed", imageName: "The-Bistro"),
-        Dining(id: 3, name: "Pastry & Puff", location: "2nd Floor Harrison Building", hours:"Open | Closes 04 PM", imageName: "Pastry&Puff"),
-        Dining(id: 4, name: "The Cafe", location: "2nd Floor Harrison Building", hours:"Open | Closes 04 PM", imageName: "The-Cafe")
+    let libraries = [
+        Library(id: 1, name: "Common Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM", imageName: "Common-Library"),
+        Library(id: 2, name: "Phycology Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM",imageName: "Common-Library"),
+        Library(id: 3, name: "Common Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM",imageName: "Common-Library"),
+        Library(id: 4, name: "Phycology Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM",imageName: "Common-Library"),
+        Library(id: 5, name: "Common Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM",imageName: "Common-Library"),
+        Library(id: 6, name: "Phycology Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM", imageName: "Common-Library"),
+        Library(id: 7, name: "Common Library", location: "2nd Floor Harrison Building",hours :"Open. 07: 00 AM to 04:00 PM", imageName: "Common-Library"),
     ]
     
-    var filteredDinings: [Dining] {
+    var filteredLibraries: [Library] {
         if searchText.isEmpty {
-            return dinings
+            return libraries
         } else {
-            return dinings.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            return libraries.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
     
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Dinings")
+            Text("Libraries")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.horizontal)
@@ -33,7 +36,7 @@ struct DiningView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("Find dinings...", text: $searchText)
+                TextField("Find libraries...", text: $searchText)
                     .textFieldStyle(PlainTextFieldStyle())
                 
                 if !searchText.isEmpty {
@@ -54,13 +57,13 @@ struct DiningView: View {
             
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    ForEach(filteredDinings) { dining in
-                        NavigationLink(destination: DiningDetailView(dining: dining)) {
-                            DiningRowView(dining: dining)
+                    ForEach(filteredLibraries) { library in
+                        NavigationLink(destination: LibraryDetailView(library: library)) {
+                            LibraryRowView(library: library)
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        if dining.id != filteredDinings.last?.id {
+                        if library.id != filteredLibraries.last?.id {
                             Divider()
                                 .padding(.leading, 90)
                         }
@@ -71,13 +74,13 @@ struct DiningView: View {
             
             Spacer()
         }
-        .navigationTitle("Dinings")
+        .navigationTitle("Libraries")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(false)
     }
 }
 
-struct Dining: Identifiable {
+struct Library: Identifiable {
     let id: Int
     let name: String
     let location: String
@@ -85,12 +88,12 @@ struct Dining: Identifiable {
     let imageName: String
 }
 
-struct DiningRowView: View {
-    let dining: Dining
+struct LibraryRowView: View {
+    let library: Library
     
     var body: some View {
         HStack(spacing: 15) {
-            Image(dining.imageName)
+            Image(library.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 60, height: 60)
@@ -101,12 +104,12 @@ struct DiningRowView: View {
                 )
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(dining.name)
+                Text(library.name)
                     .font(.body)
                     .fontWeight(.medium)
                     .foregroundColor(.primaryGreen)
                 
-                Text(dining.hours)
+                Text(library.location)
                     .font(.caption)
                     .foregroundColor(.gray)
             }
@@ -123,5 +126,5 @@ struct DiningRowView: View {
 }
 
 #Preview{
-    DiningView()
+    LibrariesView()
 }

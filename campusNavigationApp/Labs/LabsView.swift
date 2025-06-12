@@ -1,19 +1,12 @@
-//
-//  LabsView.swift
-//  campusNavigationApp
-//
-//  Created by Rishad 009 on 2025-06-11.
-//
-
 import SwiftUI
 
 struct LabsView: View {
     @State private var searchText = ""
     
     let labs = [
-        Lab(id: 1, name: "Lac Lab 1", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
-        Lab(id: 2, name: "Lac Lab 1", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
-        Lab(id: 3, name: "Lac Lab 1", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
+        Lab(id: 1, name: "Mac Lab 1", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
+        Lab(id: 2, name: "Mac Lab 2", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
+        Lab(id: 3, name: "Mac Lab 3", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
     ]
     
     var filteredLabs: [Lab] {
@@ -127,6 +120,6 @@ struct LabRowView: View {
     }
 }
 
-#Preview{
-    LabsView()
-}
+//#Preview{
+//    LabsView()
+//}

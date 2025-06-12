@@ -19,7 +19,7 @@ struct ExplorePageView: View {
                             CategoryRow(title: "Labs", icon: "desktopcomputer")
                         }
                         
-                        NavigationLink(destination: LibraryView()) {
+                        NavigationLink(destination: LibrariesView()) {
                             CategoryRow(title: "Library", icon: "books.vertical.fill")
                         }
                         
@@ -69,7 +69,7 @@ struct ExplorePageView: View {
                                 )
                             }
                             
-                            NavigationLink(destination: LibraryDetailView()) {
+                            NavigationLink(destination: LibraryDetailView(library: Library(id: 0, name: "Main Library",  location: "Ground Floor Main Building",hours :"Open. 07: 00 AM to 04:00 PM", imageName: "MainCafeteria"))) {
                                 QuickAccessCard(
                                     title: "Main library",
                                     imageName: "MainCafeteria",
