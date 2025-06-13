@@ -7,6 +7,7 @@ struct ParkingDetailView: View {
     @State private var contactNumber = ""
     @State private var selectedDate = Date()
     @State private var showingDatePicker = false
+    @State private var showNavigationPopup = false
     
     let vehicleTypes = ["Car", "Bike"]
     
@@ -46,6 +47,7 @@ struct ParkingDetailView: View {
                         }
                         
                         Button(action: {
+                            showNavigationPopup = true
                         }) {
                             HStack {
                                 Image(systemName: "location.north.fill")
@@ -251,11 +253,21 @@ struct ParkingDetailView: View {
                     
             }
         }
+        
+        if showNavigationPopup {
+            NavigationPopup(
+                isPresented: $showNavigationPopup,
+                destination: "Gate No. 01",
+                distance: "150m",
+                imageName: "Gate-1"
+            )
+            .animation(.easeInOut(duration: 0.3), value: showNavigationPopup)
+        }
     }
 }
 
-#Preview {
-    ParkingDetailView(parking: Parking(
-        id: 1, name: "Main Parking", location: "Ground Floor Harrison Building", contactNumber: "123-456-789", hours:"Open | Closes 04 PM", imageName: "MainParking"
-    ))
-}
+//#Preview {
+//    ParkingDetailView(parking: Parking(
+//        id: 1, name: "Main Parking", location: "Ground Floor Harrison Building", contactNumber: "123-456-789", hours:"Open | Closes 04 PM", imageName: "MainParking"
+//    ))
+//}

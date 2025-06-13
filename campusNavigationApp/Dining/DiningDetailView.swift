@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DiningDetailView: View {
     let dining: Dining
+    @State private var showNavigationPopup = false
     
     var body: some View {
         ScrollView {
@@ -22,6 +23,7 @@ struct DiningDetailView: View {
                         Spacer()
                         
                         Button(action: {
+                            showNavigationPopup = true
                         }) {
                             HStack {
                                 Image(systemName: "location.north.fill")
@@ -179,6 +181,16 @@ struct DiningDetailView: View {
         .navigationTitle(dining.name)
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
+        
+        if showNavigationPopup {
+            NavigationPopup(
+                isPresented: $showNavigationPopup,
+                destination: "Gate No. 01",
+                distance: "150m",
+                imageName: "Gate-1"
+            )
+            .animation(.easeInOut(duration: 0.3), value: showNavigationPopup)
+        }
     }
 }
 
@@ -227,25 +239,12 @@ struct MenuItemRow: View {
     }
 }
 
-// Updated Dining Model (if you need to add menu items)
 struct MenuItem: Identifiable {
     let id: Int
     let name: String
     let price: String
     let imageName: String
 }
-
-// You might want to update your Dining struct to include menu items
-/*
-struct Dining: Identifiable {
-    let id: Int
-    let name: String
-    let location: String
-    let hours: String
-    let imageName: String
-    let menuItems: [MenuItem]
-}
-*/
 
 //#Preview {
 //    DiningDetailView(dining: Dining(id: 1, name: "The Grill", location: "Ground Floor, Harrison Building", hours: "Open. 07:00 AM to 04:00 PM", imageName: "The-Grill"))

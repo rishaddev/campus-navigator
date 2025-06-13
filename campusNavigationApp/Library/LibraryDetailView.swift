@@ -3,6 +3,7 @@ import SwiftUI
 
 struct LibraryDetailView: View {
     let library: Library
+    @State private var showNavigationPopup = false
     
     var body: some View {
         ScrollView {
@@ -23,7 +24,7 @@ struct LibraryDetailView: View {
                         Spacer()
                         
                         Button(action: {
-                            // Navigate action
+                            showNavigationPopup = true
                         }) {
                             HStack {
                                 Image(systemName: "location.north.fill")
@@ -132,6 +133,16 @@ struct LibraryDetailView: View {
         .navigationTitle(library.name)
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
+        
+        if showNavigationPopup {
+            NavigationPopup(
+                isPresented: $showNavigationPopup,
+                destination: "Gate No. 01",
+                distance: "150m",
+                imageName: "Gate-1"
+            )
+            .animation(.easeInOut(duration: 0.3), value: showNavigationPopup)
+        }
     }
 }
 

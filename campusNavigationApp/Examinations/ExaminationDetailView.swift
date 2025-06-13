@@ -2,18 +2,20 @@ import SwiftUI
 
 struct ExaminationDetailView: View {
     let examination: Examination
+    @State private var showNavigationPopup = false
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                
+        ZStack {
+            ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    // Title
-                    Text(examination.name)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding(.horizontal)
-                        .padding(.top, 20)
+                    // Title and Navigate Button
+                    HStack {
+                        Text(examination.name)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 20)
                     
                     // Date & Time Section
                     VStack(alignment: .leading, spacing: 8) {
@@ -39,9 +41,9 @@ struct ExaminationDetailView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Navigate Button
+                    // Full Width Navigate Button
                     Button(action: {
-                        // Navigation action
+                        showNavigationPopup = true
                     }) {
                         HStack {
                             Image(systemName: "location.north.fill")
@@ -121,24 +123,108 @@ struct ExaminationDetailView: View {
                     .padding(.horizontal)
                     .padding(.top, 20)
                     
-                    Spacer(minLength: 100)
+                    // Location
+                    HStack {
+                        Text("Location")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    
+                    Text(examination.location)
+                        .font(.body)
+                        .fontWeight(.medium)
+                        .padding(.horizontal)
+                        .padding(.top, -10)
+                    
+                    // Divider
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(height: 1)
+                        .padding(.horizontal)
+                    
+                    // Today's Schedule
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Today")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .padding(.horizontal)
+                        
+                        // Schedule Card
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Web API Development")
+                                .font(.body)
+                                .fontWeight(.medium)
+                            
+                            Text("COBSCCOMP24.1P | Mr. Steve Jobs")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            
+                            Spacer().frame(height: 5)
+                            
+                            Text("Hours")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            
+                            Text("8 AM - 4 PM")
+                                .font(.body)
+                                .fontWeight(.medium)
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.05))
+                        .cornerRadius(12)
+                        .padding(.horizontal)
+                    }
+                    
+                    // Amenities
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Amenities")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .padding(.horizontal)
+                        
+                        LazyVGrid(columns: [
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ], spacing: 10) {
+                            AmenityCard(icon: "wifi", title: "Wi-Fi")
+                            AmenityCard(icon: "chair.fill", title: "100 Seats")
+                            AmenityCard(icon: "rectangle.on.rectangle", title: "Smart Board")
+                            AmenityCard(icon: "door.left.hand.open", title: "2 Entrance")
+                        }
+                        .padding(.horizontal)
+                        
+                        // Accessible Entrance (full width)
+                        AmenityCard(icon: "figure.roll", title: "Accessible Entrance", isFullWidth: true)
+                            .padding(.horizontal)
+                    }
+                    
+                    Spacer(minLength: 50)
                 }
             }
+            .navigationTitle(examination.name)
+            .navigationBarTitleDisplayMode(.inline)
+            
+            // Navigation Popup
+            if showNavigationPopup {
+                NavigationPopup(
+                    isPresented: $showNavigationPopup,
+                    destination: "Gate No. 01",
+                    distance: "150m",
+                    imageName: "Gate-1"
+                )
+                .animation(.easeInOut(duration: 0.3), value: showNavigationPopup)
+            }
         }
-        .navigationTitle(examination.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(false)
-        
     }
 }
 
-//#Preview {
-//    NavigationView {
-//        ExaminationDetailView(examination: Examination(
-//            id: 1,
-//            name: "Web Application Development",
-//            location: "Hall 24",
-//            hours: "06 June 2025 | 09:00 AM - 12:00 PM"
-//        ))
-//    }
-//}
+#Preview{
+    ExaminationDetailView(examination: Examination(
+                id: 1,
+                name: "Web Application Development",
+                location: "Hall 24",
+                hours: "06 June 2025 | 09:00 AM - 12:00 PM"
+            ))
+}
