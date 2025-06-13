@@ -45,7 +45,10 @@ struct ExplorePageView: View {
                             GridItem(.flexible()),
                             GridItem(.flexible())
                         ], spacing: 15) {
-                            NavigationLink(destination: ParkingDetailView()) {
+                            NavigationLink(destination: ParkingDetailView(parking: Parking(
+                                id: 1, name: "Main Parking", location: "Ground Floor Harrison Building", contactNumber: "123-456-789", hours:"Open | Closes 04 PM", imageName: "MainParking"
+                            ))
+                            ) {
                                 QuickAccessCard(
                                     title: "Main parking",
                                     imageName: "MainParking",
@@ -53,26 +56,28 @@ struct ExplorePageView: View {
                                 )
                             }
                             
-                            NavigationLink(destination: CafeteriaDetailView()) {
+                            NavigationLink(destination: DiningDetailView(dining: Dining(id: 1, name: "The Grill", location: "2nd Floor Harrison Building", hours:"Open | Closes 04 PM", imageName: "The-Grill"))
+                            ) {
                                 QuickAccessCard(
-                                    title: "Main cafeteria",
-                                    imageName: "MainCafeteria",
+                                    title: "The Grill",
+                                    imageName: "The-Grill",
                                     isSystemImage: false
                                 )
                             }
                             
-                            NavigationLink(destination: AuditoriumDetailView()) {
+                            NavigationLink(destination: EventDetailView(event: Event(id: 1, name: "Code Camp", location: "Jubilee Hall", date:"06 June 2025 | 10:00 AM Onwards", imageName: "Code-Camp"))
+                            ) {
                                 QuickAccessCard(
-                                    title: "Main auditorium",
-                                    imageName: "MainParking",
+                                    title: "Code Camp",
+                                    imageName: "Code-Camp",
                                     isSystemImage: false
                                 )
                             }
                             
-                            NavigationLink(destination: LibraryDetailView(library: Library(id: 0, name: "Main Library",  location: "Ground Floor Main Building",hours :"Open. 07: 00 AM to 04:00 PM", imageName: "MainCafeteria"))) {
+                            NavigationLink(destination: LibraryDetailView(library: Library(id: 1, name: "Common Library", location: "2nd Floor Harrison Building", hours :"Open. 07: 00 AM to 04:00 PM", imageName: "Common-Library"))) {
                                 QuickAccessCard(
-                                    title: "Main library",
-                                    imageName: "MainCafeteria",
+                                    title: "Common library",
+                                    imageName: "Common-Library",
                                     isSystemImage: false
                                 )
                             }
