@@ -2,42 +2,122 @@ import SwiftUI
 
 struct ExaminationDetailView: View {
     let examination: Examination
+    @State private var showNavigationPopup = false
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                // Hall Image
-                Image(examination.imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 250)
-                    .clipped()
-                
-                // Content Section
+        ZStack {
+            ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    // lab Name and Navigate Button
+                    // Title and Navigate Button
                     HStack {
                         Text(examination.name)
                             .font(.largeTitle)
                             .fontWeight(.bold)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 20)
+                    
+                    // Date & Time Section
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Date & Time")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                         
-                        Spacer()
+                        Text(examination.hours)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    .padding(.horizontal)
+                    
+                    // Venue Section
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Venue")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                         
-                        Button(action: {
-                            // Navigate action
-                        }) {
-                            HStack {
-                                Image(systemName: "location.north.fill")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 16, weight: .medium))
-                                Text("Navigate")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 16, weight: .medium))
+                        Text(examination.location)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    .padding(.horizontal)
+                    
+                    // Full Width Navigate Button
+                    Button(action: {
+                        showNavigationPopup = true
+                    }) {
+                        HStack {
+                            Image(systemName: "location.north.fill")
+                                .foregroundColor(.white)
+                                .font(.system(size: 16, weight: .medium))
+                            Text("Navigate")
+                                .foregroundColor(.white)
+                                .font(.system(size: 16, weight: .medium))
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(Color.primaryGreen)
+                        .cornerRadius(8)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+                    
+                    // Description Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Description")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.gray)
+                        
+                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua.")
+                            .font(.body)
+                            .lineSpacing(4)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 20)
+                    
+                    // Terms & Condition Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Terms & Condition")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.gray)
+                        
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack(alignment: .top) {
+                                Text("1.")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius mod tempor incididunt ut labore et dolore magna")
+                                    .font(.body)
+                                    .lineSpacing(2)
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 12)
-                            .background(Color.primaryGreen)
-                            .cornerRadius(8)
+                            
+                            HStack(alignment: .top) {
+                                Text("2.")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Text("liqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua")
+                                    .font(.body)
+                                    .lineSpacing(2)
+                            }
+                            
+                            HStack(alignment: .top) {
+                                Text("3.")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius mod tempor incididunt ut labore et dolore magna")
+                                    .font(.body)
+                                    .lineSpacing(2)
+                            }
+                            
+                            HStack(alignment: .top) {
+                                Text("4.")
+                                    .font(.body)
+                                    .fontWeight(.medium)
+                                Text("liqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius mod tempor incididunt ut labore et dolore magna aliqua.")
+                                    .font(.body)
+                                    .lineSpacing(2)
+                            }
                         }
                     }
                     .padding(.horizontal)
@@ -123,10 +203,28 @@ struct ExaminationDetailView: View {
                     Spacer(minLength: 50)
                 }
             }
+            .navigationTitle(examination.name)
+            .navigationBarTitleDisplayMode(.inline)
+            
+            // Navigation Popup
+            if showNavigationPopup {
+                NavigationPopup(
+                    isPresented: $showNavigationPopup,
+                    destination: "Gate No. 01",
+                    distance: "150m",
+                    imageName: "Gate-1"
+                )
+                .animation(.easeInOut(duration: 0.3), value: showNavigationPopup)
+            }
         }
-        .navigationTitle(examination.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .edgesIgnoringSafeArea(.top)
     }
 }
 
+#Preview{
+    ExaminationDetailView(examination: Examination(
+                id: 1,
+                name: "Web Application Development",
+                location: "Hall 24",
+                hours: "06 June 2025 | 09:00 AM - 12:00 PM"
+            ))
+}

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LabDetailView: View {
     let lab: Lab
+    @State private var showNavigationPopup = false
     
     var body: some View {
         ScrollView {
@@ -24,7 +25,7 @@ struct LabDetailView: View {
                         Spacer()
                         
                         Button(action: {
-                            // Navigate action
+                            showNavigationPopup = true
                         }) {
                             HStack {
                                 Image(systemName: "location.north.fill")
@@ -39,6 +40,7 @@ struct LabDetailView: View {
                             .background(Color.primaryGreen)
                             .cornerRadius(8)
                         }
+                        
                     }
                     .padding(.horizontal)
                     .padding(.top, 20)
@@ -127,5 +129,16 @@ struct LabDetailView: View {
         .navigationTitle(lab.name)
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.top)
+        
+        if showNavigationPopup {
+            NavigationPopup(
+                isPresented: $showNavigationPopup,
+                destination: "Gate No. 01",
+                distance: "150m",
+                imageName: "Gate-1"
+            )
+            .animation(.easeInOut(duration: 0.3), value: showNavigationPopup)
+        }
+        
     }
 }
