@@ -247,6 +247,6 @@ struct Dining: Identifiable {
 }
 */
 
-#Preview {
-    DiningDetailView(dining: Dining(id: 1, name: "The Grill", location: "Ground Floor, Harrison Building", hours: "Open. 07:00 AM to 04:00 PM", imageName: "The-Grill"))
-}
+//#Preview {
+//    DiningDetailView(dining: Dining(id: 1, name: "The Grill", location: "Ground Floor, Harrison Building", hours: "Open. 07:00 AM to 04:00 PM", imageName: "The-Grill"))
+//}

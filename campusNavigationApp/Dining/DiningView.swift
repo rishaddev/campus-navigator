@@ -122,6 +122,6 @@ struct DiningRowView: View {
     }
 }
 
-#Preview{
-    DiningView()
-}
+//#Preview{
+//    DiningView()
+//}
