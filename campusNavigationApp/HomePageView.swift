@@ -3,6 +3,7 @@ import SwiftUI
 struct HomePageView: View {
     @State private var showLectureHallsPage = false
     @State private var showLabsPage = false
+    @State private var showSOSPage = false
     @State private var searchText = ""
     
     let lectureHalls = [
@@ -40,33 +41,47 @@ struct HomePageView: View {
                 .navigationBarHidden(true)
             }
         }
+        .sheet(isPresented: $showSOSPage) {
+            SOSPageView()
+        }
     }
     
     @ViewBuilder
     private func HeaderSection() -> some View {
         VStack(alignment: .leading, spacing: 15) {
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 16))
-                
-                TextField("Search", text: $searchText)
-                    .font(.system(size: 16))
-                
-                if !searchText.isEmpty {
-                    Button(action: {
-                        searchText = ""
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 16))
+            // Search bar with SOS button
+            HStack(spacing: 12) {
+                // Search bar container
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 16))
+                    
+                    TextField("Search", text: $searchText)
+                        .font(.system(size: 16))
+                    
+                    if !searchText.isEmpty {
+                        Button(action: {
+                            searchText = ""
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 16))
+                        }
                     }
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(Color.white.opacity(0.8))
+                .cornerRadius(8)
+                
+                // SOS Button 
+                NavigationLink(destination: SOSPageView()) {
+                                            Image(systemName: "light.beacon.min")
+                                .font(.system(size: 22, weight: .bold))
+                                .foregroundColor(.red)
+                                        }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color.white.opacity(0.8))
-            .cornerRadius(8)
             .padding(.top, 10)
             
             VStack(alignment: .leading, spacing: 5) {
@@ -160,6 +175,50 @@ struct HomePageView: View {
                 .padding()
             }
         }
+    }
+}
+
+// Emergency Button Component
+struct EmergencyButton: View {
+    let title: String
+    let subtitle: String
+    let icon: String
+    let color: Color
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 15) {
+                Image(systemName: icon)
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 50)
+                    .background(color)
+                    .clipShape(Circle())
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.black)
+                    
+                    Text(subtitle)
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 16, weight: .medium))
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
+            .background(Color.white)
+            .cornerRadius(12)
+            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
