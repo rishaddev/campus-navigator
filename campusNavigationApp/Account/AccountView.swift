@@ -13,7 +13,6 @@ struct AccountView: View {
             ScrollView {
                 VStack(spacing: 30) {
                     VStack(spacing: 1) {
-                        // Profile Image
                         Image("user")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -31,7 +30,6 @@ struct AccountView: View {
                     }
                     .padding(.top, 20)
                     
-                    // Personal Information Section
                     VStack(alignment: .leading, spacing: 15) {
                         Text("Personal Information")
                             .font(.system(size: 18, weight: .medium))
@@ -56,7 +54,6 @@ struct AccountView: View {
                         .padding(.horizontal, 20)
                     }
                     
-                    // Action Buttons
                     VStack(spacing: 0) {
                         NavigationLink(destination: ReservationsView()) {
                             HStack(spacing: 12) {
@@ -83,6 +80,10 @@ struct AccountView: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.horizontal, 20)
+                    
+                    NavigationLink(destination: NoAccountView()){
+                        Text("Log Out").foregroundColor(.red).padding(.top, 20)
+                    }
                     
                     Spacer(minLength: 100)
                 }
