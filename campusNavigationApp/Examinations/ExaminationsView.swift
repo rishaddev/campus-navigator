@@ -126,6 +126,6 @@ struct ExaminationRowView: View {
     }
 }
 
-#Preview {
-    ExaminationsView()
-}
+//#Preview {
+//    ExaminationsView()
+//}

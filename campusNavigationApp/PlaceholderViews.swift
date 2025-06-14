@@ -115,21 +115,21 @@ struct LabInfoView: View {
 
 // Schedule Info View
 struct ScheduleInfoView: View {
-    let schedule: ScheduleItem
+    let schedule: Schedule
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 15) {
-                    Text(schedule.title)
+                    Text(schedule.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
                     HStack {
                         Image(systemName: "clock.fill")
                             .foregroundColor(.primaryGreen)
-                        Text(schedule.time)
+                        Text(schedule.hours)
                             .font(.headline)
                     }
                     
