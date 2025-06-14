@@ -1,35 +1,26 @@
-//
-//  LectureHallsView.swift
-//  campusNavigationApp
-//
-//  Created by Rishad 009 on 2025-06-11.
-//
-
 import SwiftUI
 
-struct LectureHallsView: View {
+struct BuildingsView: View {
     @State private var searchText = ""
     
-    let lectureHalls = [
-        LectureHall(id: 1, name: "Hall 18", location: "2nd Floor Harrison Building", imageName: "Hall-18"),
-        LectureHall(id: 2, name: "Hall 22", location: "2nd Floor Harrison Building", imageName: "Hall-22"),
-        LectureHall(id: 3, name: "Hall 303", location: "2nd Floor Harrison Building", imageName: "Hall-303"),
-        LectureHall(id: 4, name: "Hall 15", location: "2nd Floor Harrison Building", imageName: "Hall-15"),
-        LectureHall(id: 5, name: "Hall 20", location: "2nd Floor Harrison Building", imageName: "Hall-22"),
-        LectureHall(id: 6, name: "Hall 31", location: "2nd Floor Harrison Building", imageName: "Hall-303")
+    let buildings = [
+        Building(id: 1, name: "Harrison Building", location: "", imageName: "Harrison-Building"),
+        Building(id: 2, name: "Aitken Building", location: "", imageName: "Aitken-Building"),
+        Building(id: 3, name: "Lincoln Building", location: "", imageName: "Lincoln-Building"),
     ]
     
-    var filteredHalls: [LectureHall] {
+    var filteredBuildings: [Building] {
         if searchText.isEmpty {
-            return lectureHalls
+            return buildings
         } else {
-            return lectureHalls.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            return buildings.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
     
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Lecture Halls")
+            Text("Buildings")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.horizontal)
@@ -41,7 +32,7 @@ struct LectureHallsView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("Find lecture halls...", text: $searchText)
+                TextField("Find buildings...", text: $searchText)
                     .textFieldStyle(PlainTextFieldStyle())
                 
                 if !searchText.isEmpty {
@@ -62,13 +53,13 @@ struct LectureHallsView: View {
             
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    ForEach(filteredHalls) { hall in
-                        NavigationLink(destination: LectureHallDetailView(hall: hall)) {
-                            HallRowView(hall: hall)
+                    ForEach(filteredBuildings) { building in
+                        NavigationLink(destination: BuildingDetailView(building: building)) {
+                            BuildingRowView(building: building)
                         }
                         .buttonStyle(PlainButtonStyle())
                         
-                        if hall.id != filteredHalls.last?.id {
+                        if building.id != filteredBuildings.last?.id {
                             Divider()
                                 .padding(.leading, 90)
                         }
@@ -79,25 +70,25 @@ struct LectureHallsView: View {
             
             Spacer()
         }
-        .navigationTitle("Lecture Halls")
+        .navigationTitle("Buildings")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(false)
     }
 }
 
-struct LectureHall: Identifiable {
+struct Building: Identifiable {
     let id: Int
     let name: String
     let location: String
     let imageName: String
 }
 
-struct HallRowView: View {
-    let hall: LectureHall
+struct BuildingRowView: View {
+    let building: Building
     
     var body: some View {
         HStack(spacing: 15) {
-            Image(hall.imageName)
+            Image(building.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 60, height: 60)
@@ -108,14 +99,10 @@ struct HallRowView: View {
                 )
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(hall.name)
+                Text(building.name)
                     .font(.body)
                     .fontWeight(.medium)
                     .foregroundColor(.primaryGreen)
-                
-                Text(hall.location)
-                    .font(.caption)
-                    .foregroundColor(.gray)
             }
             
             Spacer()
@@ -128,8 +115,7 @@ struct HallRowView: View {
         .contentShape(Rectangle())
     }
 }
-//
-//#Preview {
-//    LectureHallsView()
-//}
-//    
+
+#Preview {
+    BuildingsView()
+}

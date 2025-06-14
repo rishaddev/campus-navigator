@@ -9,8 +9,12 @@ struct ExplorePageView: View {
                 VStack(alignment: .leading, spacing: 25) {
                     
                     VStack(spacing: 0) {
+                        NavigationLink(destination: BuildingsView()) {
+                            CategoryRow(title: "Buildings", icon: "building.2.fill")
+                        }
+                        
                         NavigationLink(destination: LectureHallsView()) {
-                            CategoryRow(title: "Lecture Halls", icon: "building.2.fill")
+                            CategoryRow(title: "Lecture Halls", icon: "door.left.hand.open")
                         }
                         
                         NavigationLink(destination: ExaminationsView()) {
@@ -168,6 +172,6 @@ struct QuickAccessCard: View {
     }
 }
 
-#Preview {
-    ExplorePageView()
-}
+//#Preview {
+//    ExplorePageView()
+//}
